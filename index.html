@@ -1,7 +1,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Baby Shower Romina - Hello Kitty Magical</title>
+  <title>Baby Shower Romina - Salón Amayrani</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     :root {
@@ -51,7 +51,7 @@
       to { background-position: 1000px 1000px; }
     }
 
-    /* Botón de Sonido (Estilo Alberto Gael) */
+    /* Botón de Sonido */
     #sound-toggle {
       position: fixed;
       top: 15px;
@@ -79,7 +79,7 @@
       width: 92%;
       max-width: 420px;
       height: 85vh;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border-radius: 45px;
       padding: 30px 20px;
       box-shadow: 0 25px 60px rgba(255, 20, 147, 0.2);
@@ -107,7 +107,6 @@
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
     .avatar-frame img { width: 100%; height: 100%; object-fit: contain; }
 
-    /* Estilo Especial para el nombre ROMINA */
     .name-romina {
       font-size: 3rem;
       color: var(--pink-rock);
@@ -118,7 +117,6 @@
       letter-spacing: -1px;
     }
 
-    /* Pantallas */
     .slide-box {
       flex: 1;
       background: linear-gradient(135deg, #fff, #fff9fb);
@@ -135,7 +133,7 @@
     .slide-title { color: var(--pink-rock); font-size: 1.6rem; margin-bottom: 12px; }
     .slide-text { color: #444; font-size: 1.1rem; line-height: 1.6; }
 
-    /* Efecto Splash Mágico al clic */
+    /* Splash Mágico */
     .magic-spark {
       position: absolute;
       width: 10px;
@@ -153,7 +151,6 @@
       100% { transform: scale(0); opacity: 0; transform: translate(var(--dx), var(--dy)); }
     }
 
-    /* Mini Juego */
     .game-zone {
       height: 140px;
       margin-top: 15px;
@@ -165,7 +162,6 @@
     }
     .game-target { position: absolute; width: 50px; height: 50px; cursor: pointer; }
 
-    /* Footer / Puntos */
     .footer { margin-top: 20px; text-align: center; }
     .dots { display: flex; justify-content: center; gap: 7px; }
     .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pastel-pink); transition: 0.3s; }
@@ -174,7 +170,7 @@
     .btn-maps {
       display: inline-block;
       margin-top: 15px;
-      padding: 10px 25px;
+      padding: 12px 25px;
       background: var(--pink-rock);
       color: white;
       text-decoration: none;
@@ -208,8 +204,7 @@
     </div>
 
     <div class="slide-box" id="slide-container">
-      <div id="slide-content">
-        </div>
+      <div id="slide-content"></div>
     </div>
 
     <div class="footer">
@@ -224,12 +219,11 @@
     {
       title: "Celebramos a",
       text: "<span class='name-romina'>Romina</span>",
-      img: "2.png",
-      isIntro: true
+      img: "2.png"
     },
     {
       title: "¡Es una Niña!",
-      text: "La familia crece y nuestro corazón también. Te invitamos a celebrar la dulce espera de nuestra bebé en un mundo lleno de lazos y color rosa.",
+      text: "La familia crece y nuestro corazón también. Te invitamos a celebrar la dulce espera de nuestra bebé Romina en un mundo lleno de lazos y color rosa.",
       img: "1.png"
     },
     {
@@ -239,9 +233,10 @@
     },
     {
       title: "Lugar del Evento",
-      text: "Nos vemos en el Salón Gala. Aquí tienes el mapa para que llegues directo a la fiesta:",
+      text: "Nos vemos en el <strong>Salón Amayrani</strong>. Aquí tienes el mapa para que llegues directo a la fiesta:",
       img: "4.png",
-      type: "map"
+      type: "map",
+      mapUrl: "https://share.google/buv8m8TSukhxhPIGQ"
     },
     {
       title: "Mini Juego Rosa",
@@ -271,7 +266,6 @@
   const tapArea = document.getElementById("tap-area");
   const slideContent = document.getElementById("slide-content");
 
-  // EFECTO MÁGICO SPLASH
   function createSplash(x, y) {
     const layer = document.getElementById('spark-layer');
     for (let i = 0; i < 15; i++) {
@@ -286,7 +280,6 @@
     }
   }
 
-  // MÉTODO ALBERTO GAEL PARA AUDIO
   function tryPlayMusic() {
     if (!bgMusic) return;
     if (!musicEnabled) {
@@ -329,7 +322,9 @@
       `;
 
       if(s.type === 'map') {
-        document.getElementById('extra-content').innerHTML = `<a href="https://maps.google.com" target="_blank" class="btn-maps" onclick="event.stopPropagation()">📍 Abrir Mapa</a>`;
+        document.getElementById('extra-content').innerHTML = `
+          <a href="${s.mapUrl}" target="_blank" class="btn-maps" onclick="event.stopPropagation()">📍 Abrir Salón Amayrani</a>
+        `;
       } else if(s.type === 'game') {
         renderGame();
       }
