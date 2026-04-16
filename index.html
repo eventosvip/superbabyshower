@@ -1,7 +1,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Baby Shower - Hello Kitty Magical Edition</title>
+  <title>Baby Shower Romina - Hello Kitty Magical</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     :root {
@@ -28,8 +28,8 @@
       justify-content: center;
     }
 
-    /* Fondo dinámico */
-    .bg-pattern {
+    /* Fondos dinámicos */
+    .bg-gradient {
       position: fixed;
       inset: 0;
       background: radial-gradient(circle at top, #fff, var(--pastel-pink));
@@ -40,10 +40,10 @@
       position: fixed;
       inset: 0;
       background-image: url('7.png');
-      background-size: 150px;
-      opacity: 0.05;
+      background-size: 140px;
+      opacity: 0.06;
       z-index: -1;
-      animation: drift 60s linear infinite;
+      animation: drift 70s linear infinite;
     }
 
     @keyframes drift {
@@ -56,126 +56,139 @@
       position: fixed;
       top: 15px;
       left: 15px;
-      width: 45px;
-      height: 45px;
-      border-radius: 999px;
-      border: 2px solid var(--pink-rock);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--pink-rock);
       background: white;
       color: var(--pink-rock);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: 0 4px 10px rgba(255, 20, 147, 0.3);
+      font-size: 1.4rem;
+      box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
       cursor: pointer;
       z-index: 100;
+      transition: 0.3s;
     }
-
-    #sound-toggle.off { opacity: 0.5; border-style: dashed; }
+    #sound-toggle.off { opacity: 0.6; border-style: dashed; }
 
     /* Tarjeta */
     .card {
       position: relative;
-      width: 90%;
+      width: 92%;
       max-width: 420px;
-      height: 82vh;
+      height: 85vh;
       background: rgba(255, 255, 255, 0.9);
-      border-radius: 40px;
-      padding: 25px;
-      box-shadow: 0 20px 50px rgba(255, 20, 147, 0.2);
-      border: 6px solid var(--white);
+      border-radius: 45px;
+      padding: 30px 20px;
+      box-shadow: 0 25px 60px rgba(255, 20, 147, 0.2);
+      border: 7px solid var(--white);
       display: flex;
       flex-direction: column;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       z-index: 10;
     }
 
     .header { text-align: center; margin-bottom: 15px; }
     
     .avatar-frame {
-      width: 110px;
-      height: 110px;
+      width: 125px;
+      height: 125px;
       margin: 0 auto 10px;
-      border: 4px solid var(--pink-rock);
+      border: 5px solid var(--pink-rock);
       border-radius: 50%;
       background: white;
-      padding: 5px;
+      padding: 6px;
       overflow: hidden;
-      box-shadow: 0 8px 15px var(--soft-pink);
+      box-shadow: 0 10px 20px var(--soft-pink);
+      animation: float 3s ease-in-out infinite;
     }
-    .avatar-frame img { width: 100%; height: 100%; object-fit: contain; transition: 0.5s; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .avatar-frame img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* Estilo Especial para el nombre ROMINA */
+    .name-romina {
+      font-size: 3rem;
+      color: var(--pink-rock);
+      text-shadow: 3px 3px 0px var(--white), 5px 5px 15px var(--soft-pink);
+      display: block;
+      margin: 10px 0;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
 
     /* Pantallas */
     .slide-box {
       flex: 1;
       background: linear-gradient(135deg, #fff, #fff9fb);
-      border-radius: 30px;
+      border-radius: 35px;
       padding: 20px;
       text-align: center;
-      border: 2px dashed var(--soft-pink);
+      border: 3px dashed var(--soft-pink);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      transition: 0.4s ease;
+      transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .slide-title { color: var(--pink-rock); font-size: 1.5rem; margin-bottom: 10px; }
-    .slide-text { color: #555; font-size: 1rem; line-height: 1.5; }
+    .slide-title { color: var(--pink-rock); font-size: 1.6rem; margin-bottom: 12px; }
+    .slide-text { color: #444; font-size: 1.1rem; line-height: 1.6; }
 
-    /* Efecto Splash Mágico */
-    .magic-dot {
+    /* Efecto Splash Mágico al clic */
+    .magic-spark {
       position: absolute;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       background: white;
       border-radius: 50%;
       pointer-events: none;
-      box-shadow: 0 0 10px var(--pink-rock);
-      animation: splash-fly 0.7s ease-out forwards;
+      box-shadow: 0 0 12px var(--pink-rock);
+      animation: spark-fly 0.8s ease-out forwards;
       z-index: 1000;
     }
 
-    @keyframes splash-fly {
+    @keyframes spark-fly {
       0% { transform: scale(1); opacity: 1; }
       100% { transform: scale(0); opacity: 0; transform: translate(var(--dx), var(--dy)); }
     }
 
-    /* Juego */
+    /* Mini Juego */
     .game-zone {
-      height: 130px;
+      height: 140px;
       margin-top: 15px;
       background: white;
-      border: 1px solid var(--pastel-pink);
       border-radius: 20px;
       position: relative;
       overflow: hidden;
+      border: 1px solid var(--pastel-pink);
     }
-    .game-obj { position: absolute; width: 45px; height: 45px; cursor: pointer; }
+    .game-target { position: absolute; width: 50px; height: 50px; cursor: pointer; }
 
-    /* Footer */
-    .footer { margin-top: 15px; text-align: center; }
-    .dots { display: flex; justify-content: center; gap: 6px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pastel-pink); transition: 0.3s; }
-    .dot.active { background: var(--pink-rock); transform: scale(1.3); }
+    /* Footer / Puntos */
+    .footer { margin-top: 20px; text-align: center; }
+    .dots { display: flex; justify-content: center; gap: 7px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pastel-pink); transition: 0.3s; }
+    .dot.active { background: var(--pink-rock); transform: scale(1.4); }
 
     .btn-maps {
       display: inline-block;
       margin-top: 15px;
-      padding: 8px 20px;
+      padding: 10px 25px;
       background: var(--pink-rock);
       color: white;
       text-decoration: none;
-      border-radius: 20px;
+      border-radius: 25px;
       font-weight: bold;
-      font-size: 0.9rem;
+      box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
     }
   </style>
 </head>
 <body>
 
-<div class="bg-pattern"></div>
+<div class="bg-gradient"></div>
 <div class="bg-icons"></div>
-<div id="magic-layer"></div>
+<div id="spark-layer"></div>
 
 <button id="sound-toggle" class="off">
   <span>🔇</span>
@@ -189,59 +202,91 @@
   <div class="card" id="tap-area">
     <div class="header">
       <div class="avatar-frame">
-        <img src="1.png" id="avatar-img">
+        <img src="1.png" id="avatar">
       </div>
-      <h2 style="color:var(--pink-rock); font-size: 1.2rem; text-transform: uppercase;">Baby Shower</h2>
+      <p style="color:var(--soft-pink); font-weight:bold; text-transform:uppercase; letter-spacing:2px;">¡Bienvenid@!</p>
     </div>
 
-    <div class="slide-box" id="slide">
-      <h1 class="slide-title" id="title">¡Bienvenid@!</h1>
-      <p class="slide-text" id="text">Toca en cualquier parte para iniciar la magia rosa...</p>
-      <div id="extra-content"></div>
+    <div class="slide-box" id="slide-container">
+      <div id="slide-content">
+        </div>
     </div>
 
     <div class="footer">
-      <p style="font-size: 0.75rem; color: var(--soft-pink); margin-bottom: 8px;">Toca para avanzar 🎀</p>
+      <p style="font-size: 0.8rem; color: var(--soft-pink); margin-bottom: 10px;">Toca para continuar 🎀</p>
       <div class="dots" id="dots"></div>
     </div>
   </div>
 </div>
 
 <script>
-  // Datos igual que en el código de Alberto Gael
   const slides = [
-    { title: "¡Es una Niña!", text: "Estamos felices de invitarte a celebrar la dulce espera de nuestra bebé. ¡Será un día lleno de lazos y alegría!", img: "1.png" },
-    { title: "Día y Hora", text: "<strong>Sábado 2 de Mayo</strong><br>A las <strong>3:00 PM</strong><br>¡Te esperamos puntualmente para las sorpresas!", img: "3.png" },
-    { title: "Ubicación", text: "La cita es en el Salón Gala. Preparamos el mapa para que no te pierdas el camino:", img: "4.png", type: "map" },
-    { title: "Mini Juego", text: "¡Ayuda a Kitty! Toca el moño 5 veces para revelar un mensaje especial.", img: "5.png", type: "game" },
-    { title: "Tu Compañía", text: "Nuestra bebé no necesita más regalos que tu cariño. Tu presencia es lo más valioso y lo único que esperamos para este gran día.", img: "6.png" },
-    { title: "¡Nos vemos!", text: "Gracias por ser parte de este momento tan importante. ¡Los esperamos con mucha ilusión!", img: "7.png" }
+    {
+      title: "Celebramos a",
+      text: "<span class='name-romina'>Romina</span>",
+      img: "2.png",
+      isIntro: true
+    },
+    {
+      title: "¡Es una Niña!",
+      text: "La familia crece y nuestro corazón también. Te invitamos a celebrar la dulce espera de nuestra bebé en un mundo lleno de lazos y color rosa.",
+      img: "1.png"
+    },
+    {
+      title: "Día y Hora",
+      text: "<strong>Sábado 2 de Mayo</strong><br>A las <strong>3:00 PM</strong><br>¡Preparamos muchas sorpresas para compartir contigo!",
+      img: "3.png"
+    },
+    {
+      title: "Lugar del Evento",
+      text: "Nos vemos en el Salón Gala. Aquí tienes el mapa para que llegues directo a la fiesta:",
+      img: "4.png",
+      type: "map"
+    },
+    {
+      title: "Mini Juego Rosa",
+      text: "¡Ayuda a Kitty! Toca 5 veces el moñito para revelar el siguiente mensaje.",
+      img: "5.png",
+      type: "game"
+    },
+    {
+      title: "Tu Compañía",
+      text: "Nuestra pequeña Romina no necesita más regalos que tu cariño. Tu presencia es lo más valioso y lo único que esperamos para este gran día.",
+      img: "6.png"
+    },
+    {
+      title: "¡Los Esperamos!",
+      text: "Gracias por ser parte de este sueño. ¡Nos vemos muy pronto rodeados de ternura!",
+      img: "7.png"
+    }
   ];
 
   let current = 0;
   let musicEnabled = false;
   let musicTriedOnce = false;
+
   const bgMusic = document.getElementById("bg-music");
   const soundToggle = document.getElementById("sound-toggle");
-  const avatarImg = document.getElementById("avatar-img");
+  const avatar = document.getElementById("avatar");
   const tapArea = document.getElementById("tap-area");
+  const slideContent = document.getElementById("slide-content");
 
-  // EFECTO MÁGICO (SPLASH)
+  // EFECTO MÁGICO SPLASH
   function createSplash(x, y) {
-    const layer = document.getElementById('magic-layer');
-    for (let i = 0; i < 12; i++) {
+    const layer = document.getElementById('spark-layer');
+    for (let i = 0; i < 15; i++) {
       const p = document.createElement('div');
-      p.className = 'magic-dot';
+      p.className = 'magic-spark';
       p.style.left = x + 'px';
       p.style.top = y + 'px';
-      p.style.setProperty('--dx', (Math.random() - 0.5) * 200 + 'px');
-      p.style.setProperty('--dy', (Math.random() - 0.5) * 200 + 'px');
+      p.style.setProperty('--dx', (Math.random() - 0.5) * 220 + 'px');
+      p.style.setProperty('--dy', (Math.random() - 0.5) * 220 + 'px');
       layer.appendChild(p);
-      setTimeout(() => p.remove(), 700);
+      setTimeout(() => p.remove(), 800);
     }
   }
 
-  // MÉTODO DE AUDIO (IGUAL QUE ALBERTO GAEL)
+  // MÉTODO ALBERTO GAEL PARA AUDIO
   function tryPlayMusic() {
     if (!bgMusic) return;
     if (!musicEnabled) {
@@ -249,20 +294,17 @@
         musicEnabled = true;
         soundToggle.classList.remove("off");
         soundToggle.querySelector("span").textContent = "🔊";
-      }).catch(() => {
-        // Bloqueado por el navegador
-      });
+      }).catch(err => console.log("Audio esperando interacción"));
     }
   }
 
   soundToggle.addEventListener("click", (e) => {
     e.stopPropagation();
     if (!musicEnabled) {
-      bgMusic.play().then(() => {
-        musicEnabled = true;
-        soundToggle.classList.remove("off");
-        soundToggle.querySelector("span").textContent = "🔊";
-      });
+      bgMusic.play();
+      musicEnabled = true;
+      soundToggle.classList.remove("off");
+      soundToggle.querySelector("span").textContent = "🔊";
     } else {
       bgMusic.pause();
       musicEnabled = false;
@@ -271,20 +313,23 @@
     }
   });
 
-  function render() {
+  function update() {
     const s = slides[current];
-    const box = document.getElementById('slide');
-    box.style.opacity = 0;
+    const box = document.getElementById('slide-container');
     
+    box.style.opacity = 0;
+    box.style.transform = "translateY(15px)";
+
     setTimeout(() => {
-      document.getElementById('title').innerText = s.title;
-      document.getElementById('text').innerHTML = s.text;
-      avatarImg.src = s.img;
-      
-      const extra = document.getElementById('extra-content');
-      extra.innerHTML = '';
+      avatar.src = s.img;
+      slideContent.innerHTML = `
+        <h1 class="slide-title">${s.title}</h1>
+        <div class="slide-text">${s.text}</div>
+        <div id="extra-content"></div>
+      `;
+
       if(s.type === 'map') {
-        extra.innerHTML = `<a href="https://maps.google.com" target="_blank" class="btn-maps" onclick="event.stopPropagation()">📍 Ver en Google Maps</a>`;
+        document.getElementById('extra-content').innerHTML = `<a href="https://maps.google.com" target="_blank" class="btn-maps" onclick="event.stopPropagation()">📍 Abrir Mapa</a>`;
       } else if(s.type === 'game') {
         renderGame();
       }
@@ -298,7 +343,8 @@
       });
 
       box.style.opacity = 1;
-    }, 250);
+      box.style.transform = "translateY(0)";
+    }, 300);
   }
 
   function renderGame() {
@@ -307,7 +353,7 @@
     zone.className = 'game-zone';
     const target = document.createElement('img');
     target.src = '4.png';
-    target.className = 'game-obj';
+    target.className = 'game-target';
     let hits = 0;
 
     function move() {
@@ -319,7 +365,7 @@
       e.stopPropagation();
       hits++;
       if(hits >= 5) {
-        document.getElementById('text').innerHTML = "<strong>¡Bravo!</strong><br>Nuestra bebé ya quiere conocerte. 🎀";
+        document.querySelector('.slide-text').innerHTML = "<strong>¡Felicidades!</strong><br>Romina ya quiere conocerte. 🎀";
         zone.remove();
       } else { move(); }
     };
@@ -331,17 +377,16 @@
   tapArea.addEventListener('click', (e) => {
     createSplash(e.clientX, e.clientY);
     
-    // MÉTODO ALBERTO GAEL: Intentar música en el primer clic
     if (!musicTriedOnce) {
       tryPlayMusic();
       musicTriedOnce = true;
     }
 
     current = (current + 1) % slides.length;
-    render();
+    update();
   });
 
-  render();
+  update();
 </script>
 </body>
 </html>
