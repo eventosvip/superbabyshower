@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Súper Rifa Día del Niño 2026 - DIF Altamira</title>
+    
+    <link href="https://preconnect" rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="normalize.css">
+
+    <style>
+        /* --- PALETA DE COLORES --- */
+        :root {
+            --hero-magenta: #D11A8B; 
+            --hero-purple: #4A1A6B; 
+            --hero-yellow: #FFD400; 
+            --hero-white: #FFFFFF; 
+            --hero-cyan: #00C4FF; 
+            --sidebar-bg: #FFF5FA; 
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            height: 100vh;
+            color: #333;
+            overflow: hidden;
+            background-color: var(--hero-magenta);
+            background-image: 
+                radial-gradient(circle at center, transparent 20%, rgba(74, 26, 107, 0.6) 100%),
+                radial-gradient(circle, rgba(0,0,0,0.1) 2px, transparent 2.5px);
+            background-size: 100% 100%, 15px 15px;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL IZQUIERDO --- */
+        #main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- RECURSOS (NIÑOS) EN LAS ESQUINAS --- */
+        .bg-decor { 
+            position: absolute; 
+            z-index: 2; 
+            pointer-events: none; 
+            mix-blend-mode: multiply; 
+            filter: contrast(1.3) brightness(1.1) saturate(1.3);
+            opacity: 0.95;
+        }
+        
+        .decor-1 { top: 15%; left: 2%; width: 190px; animation: floatKids 5s ease-in-out infinite; }
+        .decor-2 { bottom: 0%; left: 2%; width: 210px; animation: floatKids 6s ease-in-out infinite alternate; }
+        .decor-3 { top: 15%; right: 2%; width: 180px; animation: floatKids 7s ease-in-out infinite; }
+        .decor-4 { bottom: 0%; right: 2%; width: 200px; animation: floatKids 5.5s ease-in-out infinite alternate; }
+
+        @keyframes floatKids { 
+            0%, 100% { transform: translateY(0px) rotate(-2deg); } 
+            50% { transform: translateY(-15px) rotate(3deg); } 
+        }
+
+        /* Logos superiores (PNGs) */
+        .header-logos {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 40px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 15px;
+            left: 0;
+            z-index: 20;
+        }
+        
+        .logo-box {
+            width: 130px;
+            background: white;
+            border-radius: 15px;
+            padding: 8px;
+            box-shadow: 4px 4px 0px rgba(74, 26, 107, 0.5);
+            border: 3px solid var(--hero-purple);
+            animation: flotarLogo 4s ease-in-out infinite;
+        }
+        .logo-box img { width: 100%; height: auto; display: block; }
+        .logo-box:nth-child(2) { animation-delay: 1.5s; }
+
+        @keyframes flotarLogo {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+
+        /* TÍTULO REUBICADO Y MÁS PEQUEÑO */
+        #main-title-img {
+            margin-top: 5px; 
+            max-width: 220px; 
+            width: 100%;
+            animation: floatTitle 4s ease-in-out infinite;
+            z-index: 10;
+            mix-blend-mode: multiply;
+        }
+
+        @keyframes floatTitle { 
+            0%, 100% { transform: translateY(0) scale(1); } 
+            50% { transform: translateY(-5px) scale(1.05); } 
+        }
+
+        /* PANTALLAS */
+        .screen { display: none; width: 100%; max-width: 1300px; flex-direction: column; align-items: center; flex: 1; }
+        .screen.active { display: flex; }
+
+        /* --- PANTALLA 1: CONFIGURACIÓN --- */
+        .config-box {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 30px;
+            box-shadow: 10px 10px 0px var(--hero-purple);
+            border: 5px solid var(--hero-yellow);
+            text-align: center;
+            margin-top: 80px;
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        .config-box h2 {
+            font-family: 'Luckiest Guy', cursive;
+            color: var(--hero-magenta);
+            font-size: 2.5rem;
+            margin-top: 0;
+            -webkit-text-stroke: 1px var(--hero-purple);
+        }
+
+        .input-group { margin-bottom: 20px; text-align: left; width: 100%; }
+        .input-group label { display: block; font-weight: 900; margin-bottom: 8px; color: var(--hero-purple); font-size: 1.2rem; }
+        .input-group input { 
+            width: 100%; padding: 15px; border: 3px solid var(--hero-purple); 
+            border-radius: 15px; font-size: 1.3rem; font-weight: bold; background-color: #f4f4f4;
+            outline: none; box-sizing: border-box;
+        }
+
+        /* --- PANTALLA 2: SORTEO --- */
+        #raffle-screen { margin-top: 15px; padding-bottom: 20px; }
+
+        .counter-badge {
+            background-color: var(--hero-yellow);
+            color: var(--hero-purple);
+            border: 3px solid var(--hero-purple);
+            padding: 8px 30px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            box-shadow: 4px 4px 0px var(--hero-purple);
+            z-index: 10;
+        }
+
+        /* --- CONTENEDOR PARA LAS VIÑETAS GIGANTES --- */
+        #bubbles-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; 
+            flex-wrap: nowrap; 
+            width: 100%;
+            flex: 1; 
+            margin-bottom: 20px;
+            z-index: 5;
+        }
+
+        .comic-bubble-container {
+            position: relative;
+            width: 360px; 
+            height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Los Rayos ocultos atrás */
+        .rayos-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 180%;
+            height: 180%;
+            object-fit: contain;
+            transform: translate(-50%, -50%) scale(0.1);
+            z-index: 3;
+            opacity: 0;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
+
+        .rayos-blast { animation: blastRayos 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        @keyframes blastRayos {
+            0% { transform: translate(-50%, -50%) scale(0.2) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.4) rotate(45deg); opacity: 0; }
+        }
+
+        /* La Viñeta principal */
+        .vineta-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 4;
+            animation: breatheVineta 3s ease-in-out infinite;
+        }
+
+        #bubble-container-1 .vineta-bg { animation-delay: 0s; }
+        #bubble-container-2 .vineta-bg { animation-delay: 1s; }
+        #bubble-container-3 .vineta-bg { animation-delay: 2s; }
+
+        @keyframes breatheVineta {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* --- SISTEMA DE TRAGAMONEDAS --- */
+        .number-display {
+            font-family: 'Luckiest Guy', cursive;
+            color: var(--hero-yellow);
+            -webkit-text-stroke: 4px var(--hero-purple);
+            text-shadow: 
+                6px 6px 0px var(--hero-purple),
+                10px 10px 0px rgba(0,0,0,0.3);
+            line-height: 1;
+            margin: 0;
+            z-index: 10;
+            position: absolute; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden; 
+            animation: floatNumber 3.5s ease-in-out infinite;
+        }
+
+        .reel-strip {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transition: transform 3.5s cubic-bezier(0.15, 0.85, 0.15, 1);
+            will-change: transform;
+        }
+
+        .reel-strip.spinning { filter: blur(1.5px); }
+
+        .reel-item {
+            height: 340px; 
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            box-sizing: border-box;
+            padding-bottom: 20px; 
+        }
+
+        .boom-effect { 
+            animation: 
+                boom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                floatNumber 3.5s ease-in-out infinite 0.5s; 
+        }
+
+        @keyframes boom { 
+            0% { transform: scale(0.2) rotate(-15deg); opacity: 0; } 
+            50% { transform: scale(1.2) rotate(5deg); } 
+            100% { transform: scale(1) rotate(0deg); opacity: 1; } 
+        }
+
+        @keyframes floatNumber {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-8px) rotate(2deg) scale(1.02); }
+        }
+
+        /* --- BOTONES DE ACCIÓN REUBICADOS AL FONDO --- */
+        .action-buttons {
+            display: flex;
+            flex-direction: row; 
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px; 
+            z-index: 10;
+            margin-top: auto; 
+        }
+
+        button {
+            border: 4px solid var(--hero-purple);
+            padding: 12px 25px;
+            font-size: 1.3rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 900;
+            font-family: 'Nunito', sans-serif;
+            text-transform: uppercase;
+            transition: transform 0.1s;
+        }
+
+        .btn-sacar {
+            background-color: var(--hero-yellow);
+            color: var(--hero-purple);
+            box-shadow: 0 8px 0px var(--hero-purple);
+        }
+        .btn-sacar:hover { background-color: #FFE659; transform: translateY(2px); box-shadow: 0 6px 0px var(--hero-purple); }
+        .btn-sacar:active { transform: translateY(8px); box-shadow: 0 0px 0px var(--hero-purple); }
+        .btn-sacar:disabled { background: #ccc; box-shadow: 0 8px 0px #999; border-color: #999; color: #666; cursor: not-allowed; }
+
+        .btn-guardar {
+            background-color: var(--hero-cyan);
+            color: var(--hero-purple);
+            box-shadow: 0 6px 0px var(--hero-purple);
+            font-size: 1.1rem;
+            padding: 12px 20px;
+        }
+        .btn-guardar:hover { background-color: #33D1FF; transform: translateY(2px); box-shadow: 0 4px 0px var(--hero-purple); }
+        .btn-guardar:active { transform: translateY(6px); box-shadow: 0 0px 0px var(--hero-purple); }
+
+        /* --- PANEL DERECHO (Historial) --- */
+        #sidebar {
+            width: 380px; 
+            background-color: var(--sidebar-bg);
+            border-left: 6px solid var(--hero-purple);
+            display: flex;
+            flex-direction: column;
+            z-index: 20;
+            box-shadow: -10px 0 20px rgba(0,0,0,0.3);
+        }
+
+        #sidebar-header {
+            padding: 25px 20px;
+            background-color: var(--hero-magenta);
+            color: var(--hero-yellow);
+            text-align: center;
+            border-bottom: 6px solid var(--hero-purple);
+        }
+        #sidebar-header h2 { 
+            margin: 0; 
+            font-family: 'Luckiest Guy', cursive; 
+            font-size: 2rem; 
+            letter-spacing: 2px;
+            -webkit-text-stroke: 1px var(--hero-purple);
+            text-shadow: 3px 3px 0 var(--hero-purple);
+        }
+
+        #history-list {
+            list-style: none;
+            padding: 15px;
+            margin: 0;
+            overflow-y: auto;
+            flex: 1;
+        }
+        #history-list::-webkit-scrollbar { width: 10px; }
+        #history-list::-webkit-scrollbar-track { background: #f1f1f1; }
+        #history-list::-webkit-scrollbar-thumb { background: var(--hero-magenta); border-radius: 10px; }
+
+        #history-list li {
+            background: white;
+            border: 3px solid var(--hero-purple);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 4px 4px 0px rgba(74, 26, 107, 0.2);
+            animation: slideLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        @keyframes slideLeft { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
+
+        /* CONTRASTE EXTREMO PARA EL HISTORIAL */
+        .hist-number {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 2.8rem; 
+            color: var(--hero-yellow); 
+            -webkit-text-stroke: 2px var(--hero-purple); 
+            text-shadow: 3px 3px 0px var(--hero-purple), 5px 5px 5px rgba(0,0,0,0.3); 
+        }
+
+        .hist-details {
+            text-align: right;
+            color: var(--hero-purple);
+            font-weight: 900;
+            font-size: 1.1rem; 
+        }
+        .hist-details span { color: #888; font-size: 0.85rem; font-weight: bold; }
+
+        /* Botón Reset */
+        .btn-reset {
+            margin: 15px;
+            padding: 10px;
+            background-color: #FF3B30;
+            color: white;
+            border: 3px solid #8A0000;
+            border-radius: 15px;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #8A0000;
+            transition: transform 0.1s;
+        }
+        .btn-reset:active { transform: translateY(4px); box-shadow: 0 0 0 #8A0000; }
+
+        /* ZONA DE EXPLOSIÓN DE CONFETI ESTILO CÓMIC */
+        .celebration-zone {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 1px; height: 1px;
+            z-index: 100;
+            pointer-events: none;
+            overflow: visible;
+        }
+        .comic-particle {
+            position: absolute;
+            font-family: 'Luckiest Guy', cursive;
+            pointer-events: none;
+            opacity: 0;
+            font-size: 2.5rem;
+            color: var(--hero-yellow);
+            -webkit-text-stroke: 2px var(--hero-purple);
+        }
+        @keyframes blastParticle {
+            0% { transform: translate(0, 0) scale(0.2) rotate(0deg); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(var(--s)) rotate(var(--tr)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-content">
+        
+        <img src="Recurso1.png" class="bg-decor decor-1" alt="Niño 1">
+        <img src="Recurso3.png" class="bg-decor decor-2" alt="Niño 3">
+        <img src="Recurso5.png" class="bg-decor decor-3" alt="Niño 5">
+        <img src="Recurso6.png" class="bg-decor decor-4" alt="Niño 6">
+
+        <div class="header-logos">
+            <div class="logo-box"><img src="img_1.png" alt="Logo DIF" onerror="this.style.display='none'"></div>
+            <div class="logo-box"><img src="img_2.png" alt="Logo Compromisos" onerror="this.style.display='none'"></div>
+        </div>
+
+        <img src="logo.png" id="main-title-img" alt="Súper Día del Niño">
+
+        <div id="setup-screen" class="screen active">
+            <div class="config-box">
+                <h2>INICIAR MISIÓN</h2>
+                <div class="input-group">
+                    <label>Primer Boleto:</label>
+                    <input type="number" id="min-val" value="1" min="1">
+                </div>
+                <div class="input-group">
+                    <label>Último Boleto:</label>
+                    <input type="number" id="max-val" value="100" min="2">
+                </div>
+                <button class="btn-sacar" onclick="iniciarRifa()">¡ARRANCAR! 🚀</button>
+            </div>
+        </div>
+
+        <div id="raffle-screen" class="screen">
+            
+            <div class="counter-badge" id="counter-display">Boletos restantes: 0</div>
+            
+            <div id="bubbles-wrapper">
+                
+                <div class="comic-bubble-container" id="bubble-container-1">
+                    <img src="rayos.png" class="rayos-bg" id="rayos-bg-1" alt="Rayos">
+                    <img src="viñeta.png" class="vineta-bg" alt="Viñeta">
+                    <div class="celebration-zone" id="celebration-zone-1"></div>
+                    <div class="number-display" id="number-display-1"></div>
+                </div>
+
+                <div class="comic-bubble-container" id="bubble-container-2">
+                    <img src="rayos.png" class="rayos-bg" id="rayos-bg-2" alt="Rayos">
+                    <img src="viñeta.png" class="vineta-bg" alt="Viñeta">
+                    <div class="celebration-zone" id="celebration-zone-2"></div>
+                    <div class="number-display" id="number-display-2"></div>
+                </div>
+
+                <div class="comic-bubble-container" id="bubble-container-3">
+                    <img src="rayos.png" class="rayos-bg" id="rayos-bg-3" alt="Rayos">
+                    <img src="viñeta.png" class="vineta-bg" alt="Viñeta">
+                    <div class="celebration-zone" id="celebration-zone-3"></div>
+                    <div class="number-display" id="number-display-3"></div>
+                </div>
+
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-sacar" id="btn-next-1" onclick="sacarNumeros(1)">💥 ¡SACAR 1 GANADOR!</button>
+                <button class="btn-sacar" id="btn-next-3" onclick="sacarNumeros(3)">💥💥💥 ¡SACAR 3 GANADORES!</button>
+                <button class="btn-guardar" onclick="exportarExcel()">📋 Guardar Resultados</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="sidebar">
+        <div id="sidebar-header">
+            <h2>🏆 HÉROES GANADORES</h2>
+        </div>
+        <ul id="history-list"></ul>
+        <button class="btn-reset" onclick="reiniciarTodo()">🛑 REINICIAR RIFA</button>
+    </div>
+
+    <script>
+        let numerosDisponibles = [];
+        let historialSorteo = [];
+        let min, max;
+
+        const setupScreen = document.getElementById('setup-screen');
+        const raffleScreen = document.getElementById('raffle-screen');
+        const historyList = document.getElementById('history-list');
+        const counterDisplay = document.getElementById('counter-display');
+        const btnNext1 = document.getElementById('btn-next-1');
+        const btnNext3 = document.getElementById('btn-next-3');
+
+        const particulas = ['⭐', '⚡', '💥', 'BOOM!', 'POW!'];
+
+        // Al cargar la página, revisar si hay memoria guardada
+        window.onload = function() {
+            cargarProgreso();
+        };
+
+        // Prevenir cierre accidental de pestaña
+        window.addEventListener('beforeunload', function (e) {
+            if (numerosDisponibles.length > 0 && historialSorteo.length > 0) {
+                e.preventDefault();
+                e.returnValue = ''; 
+            }
+        });
+
+        function getFontSize(numero) {
+            if(numero > 999) return '8rem';
+            if(numero > 99) return '10rem';
+            return '12rem';
+        }
+
+        // --- SISTEMA DE GUARDADO EN MEMORIA (LOCALSTORAGE) ---
+        function guardarProgreso() {
+            localStorage.setItem('rifa_numerosDisponibles', JSON.stringify(numerosDisponibles));
+            localStorage.setItem('rifa_historialSorteo', JSON.stringify(historialSorteo));
+            localStorage.setItem('rifa_min', min);
+            localStorage.setItem('rifa_max', max);
+            localStorage.setItem('rifa_activa', 'true');
+        }
+
+        function cargarProgreso() {
+            if (localStorage.getItem('rifa_activa') === 'true') {
+                numerosDisponibles = JSON.parse(localStorage.getItem('rifa_numerosDisponibles'));
+                historialSorteo = JSON.parse(localStorage.getItem('rifa_historialSorteo'));
+                min = parseInt(localStorage.getItem('rifa_min'));
+                max = parseInt(localStorage.getItem('rifa_max'));
+
+                // Reconstruir interfaz gráfica
+                setupScreen.classList.remove('active');
+                raffleScreen.classList.add('active');
+                actualizarContador();
+                
+                // Preparar viñetas
+                for(let i=1; i<=3; i++) {
+                    document.getElementById(`bubble-container-${i}`).style.display = 'none';
+                    const numDisp = document.getElementById(`number-display-${i}`);
+                    numDisp.innerHTML = `<div class="reel-strip" style="transform: translateY(0);"><div class="reel-item" style="font-size: 12rem;">?</div></div>`;
+                }
+                document.getElementById(`bubble-container-2`).style.display = 'flex';
+
+                // Reconstruir lista lateral (de atrás para adelante para que quede en orden)
+                historyList.innerHTML = '';
+                [...historialSorteo].reverse().forEach(ganador => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="hist-number">${ganador.numero}</div>
+                        <div class="hist-details">Lugar: ${ganador.posicion}<br><span>${ganador.hora}</span></div>
+                    `;
+                    historyList.appendChild(li);
+                });
+
+                if (numerosDisponibles.length === 0) {
+                    btnNext1.disabled = true;
+                    btnNext3.disabled = true;
+                    btnNext1.textContent = "FIN ⭐";
+                    btnNext3.textContent = "FIN ⭐";
+                }
+            }
+        }
+
+        function reiniciarTodo() {
+            if(confirm("🚨 ¡CUIDADO! 🚨\n\n¿Estás seguro de que quieres borrar todos los ganadores y reiniciar la rifa desde cero? Esta acción no se puede deshacer.")) {
+                localStorage.clear();
+                location.reload(); // Recarga la página para volver a la pantalla de configuración
+            }
+        }
+
+        function iniciarRifa() {
+            min = parseInt(document.getElementById('min-val').value);
+            max = parseInt(document.getElementById('max-val').value);
+
+            if (min >= max) {
+                alert("Error: El número final debe ser mayor al inicial.");
+                return;
+            }
+
+            numerosDisponibles = [];
+            for (let i = min; i <= max; i++) { numerosDisponibles.push(i); }
+
+            historialSorteo = [];
+            historyList.innerHTML = '';
+            
+            for(let i=1; i<=3; i++) {
+                document.getElementById(`bubble-container-${i}`).style.display = 'none';
+                const numDisp = document.getElementById(`number-display-${i}`);
+                numDisp.innerHTML = `<div class="reel-strip" style="transform: translateY(0);"><div class="reel-item" style="font-size: 12rem;">?</div></div>`;
+                numDisp.classList.remove('boom-effect');
+            }
+            document.getElementById(`bubble-container-2`).style.display = 'flex';
+
+            btnNext1.disabled = false;
+            btnNext3.disabled = false;
+            btnNext1.textContent = "💥 ¡SACAR 1 GANADOR!";
+            btnNext3.textContent = "💥💥💥 ¡SACAR 3 GANADORES!";
+            actualizarContador();
+
+            guardarProgreso(); // Guarda el estado inicial
+
+            setupScreen.classList.remove('active');
+            raffleScreen.classList.add('active');
+        }
+
+        // --- SISTEMA DE TRAGAMONEDAS ---
+        function sacarNumeros(cantidad) {
+            if (numerosDisponibles.length === 0) return;
+            
+            btnNext1.disabled = true;
+            btnNext3.disabled = true;
+
+            let cantidadASacar = Math.min(cantidad, numerosDisponibles.length);
+            
+            let targetBubbles = [];
+            if (cantidad === 1) targetBubbles = [2]; 
+            else { 
+                if (cantidadASacar === 3) targetBubbles = [1, 2, 3];
+                if (cantidadASacar === 2) targetBubbles = [1, 2];
+                if (cantidadASacar === 1) targetBubbles = [2];
+            }
+
+            for(let j=1; j<=3; j++) {
+                document.getElementById(`bubble-container-${j}`).style.display = 'none';
+            }
+
+            targetBubbles.forEach(id => {
+                document.getElementById(`bubble-container-${id}`).style.display = 'flex';
+                const numDisp = document.getElementById(`number-display-${id}`);
+                numDisp.classList.remove('boom-effect'); 
+                numDisp.innerHTML = `<div class="reel-strip" style="transform: translateY(0);"><div class="reel-item" style="font-size: 12rem;">?</div></div>`;
+            });
+
+            targetBubbles.forEach((bubbleId, i) => {
+                
+                setTimeout(() => {
+                    const indiceAleatorio = Math.floor(Math.random() * numerosDisponibles.length);
+                    const numeroGanador = numerosDisponibles.splice(indiceAleatorio, 1)[0];
+                    
+                    const numDisp = document.getElementById(`number-display-${bubbleId}`);
+                    numDisp.innerHTML = ''; 
+
+                    const strip = document.createElement('div');
+                    strip.className = 'reel-strip spinning'; 
+
+                    const numSpins = 40; 
+                    const itemHeight = 340; 
+
+                    for(let n=0; n<numSpins; n++) {
+                        const item = document.createElement('div');
+                        item.className = 'reel-item';
+                        let fauxNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                        item.textContent = fauxNum;
+                        item.style.fontSize = getFontSize(fauxNum);
+                        strip.appendChild(item);
+                    }
+
+                    const winItem = document.createElement('div');
+                    winItem.className = 'reel-item';
+                    winItem.textContent = numeroGanador;
+                    winItem.style.fontSize = getFontSize(numeroGanador);
+                    strip.appendChild(winItem);
+
+                    numDisp.appendChild(strip);
+
+                    void strip.offsetWidth;
+
+                    const targetY = -(numSpins * itemHeight); 
+                    strip.style.transform = `translateY(${targetY}px)`;
+
+                    setTimeout(() => {
+                        strip.classList.remove('spinning');
+
+                        const ahora = new Date();
+                        const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                        const posicion = historialSorteo.length + 1;
+                        historialSorteo.push({ posicion, numero: numeroGanador, fecha: ahora.toLocaleDateString(), hora });
+
+                        // ¡Guardar progreso en memoria inmediatamente después de sacar el número!
+                        guardarProgreso();
+
+                        numDisp.classList.remove('boom-effect');
+                        void numDisp.offsetWidth; 
+                        numDisp.classList.add('boom-effect');
+
+                        const rayosBg = document.getElementById(`rayos-bg-${bubbleId}`);
+                        rayosBg.classList.remove('rayos-blast');
+                        void rayosBg.offsetWidth; 
+                        rayosBg.classList.add('rayos-blast');
+
+                        crearExplosionComic(`celebration-zone-${bubbleId}`);
+                        
+                        actualizarContador();
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <div class="hist-number">${numeroGanador}</div>
+                            <div class="hist-details">Lugar: ${posicion}<br><span>${hora}</span></div>
+                        `;
+                        historyList.prepend(li); 
+
+                        if(i === targetBubbles.length - 1) {
+                            if (numerosDisponibles.length > 0) {
+                                btnNext1.disabled = false;
+                                btnNext3.disabled = false;
+                            } else {
+                                btnNext1.textContent = "FIN ⭐";
+                                btnNext3.textContent = "FIN ⭐";
+                            }
+                        }
+
+                    }, 3500); 
+
+                }, i * 400); 
+            });
+        }
+
+        function crearExplosionComic(zoneId) {
+            const zone = document.getElementById(zoneId);
+            zone.innerHTML = ''; 
+            const cantidad = 15; 
+
+            for (let i = 0; i < cantidad; i++) {
+                const span = document.createElement('span');
+                span.textContent = particulas[Math.floor(Math.random() * particulas.length)];
+                span.classList.add('comic-particle');
+
+                if(span.textContent.length > 2) {
+                    span.style.fontSize = '3.5rem';
+                    span.style.color = '#FFF';
+                }
+
+                const angle = Math.random() * Math.PI * 2; 
+                const dist = 150 + Math.random() * 250; 
+                
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist;
+                const tr = (Math.random() - 0.5) * 360; 
+                const s = 0.8 + Math.random() * 1.2; 
+
+                span.style.setProperty('--tx', `${tx}px`);
+                span.style.setProperty('--ty', `${ty}px`);
+                span.style.setProperty('--tr', `${tr}deg`);
+                span.style.setProperty('--s', s);
+
+                span.style.animation = `blastParticle 1s cubic-bezier(0.12, 0.89, 0.32, 1) forwards`;
+                zone.appendChild(span);
+
+                setTimeout(() => { span.remove(); }, 1000);
+            }
+        }
+
+        function actualizarContador() {
+            counterDisplay.textContent = `BOLETOS RESTANTES: ${numerosDisponibles.length}`;
+        }
+
+        function exportarExcel() {
+            if (historialSorteo.length === 0) { alert("¡Aún no hay ganadores en la base de datos!"); return; }
+            let csvContent = "Posición,Número,Fecha,Hora\n";
+            historialSorteo.forEach(row => { csvContent += `${row.posicion},${row.numero},${row.fecha},${row.hora}\n`; });
+            const bom = "\uFEFF";
+            const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "Ganadores_Super_Rifa.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // APUNTADOR BLUETOOTH
+        document.addEventListener('keydown', function(event) {
+            if (raffleScreen.classList.contains('active')) {
+                if (btnNext1.disabled || btnNext3.disabled) return; 
+
+                if (event.key === 'Tab') {
+                    event.preventDefault(); 
+                    simularClicVisual(btnNext3);
+                    sacarNumeros(3);
+                } 
+                else if (['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', ' ', 'Enter', 'PageDown', 'PageUp'].includes(event.key)) {
+                    event.preventDefault(); 
+                    simularClicVisual(btnNext1);
+                    sacarNumeros(1);
+                }
+            }
+        });
+
+        function simularClicVisual(btn) {
+            btn.style.transform = 'translateY(8px)';
+            btn.style.boxShadow = '0 0px 0px var(--hero-purple)';
+            setTimeout(() => {
+                btn.style.transform = '';
+                btn.style.boxShadow = '';
+            }, 150);
+        }
+    </script>
+</body>
+</html>
