@@ -20,59 +20,149 @@
     .character{position:absolute;width:86px;max-height:110px;object-fit:contain;z-index:4;filter:drop-shadow(0 7px 8px rgba(0,0,0,.3));animation:floatChar 2.2s ease-in-out infinite;pointer-events:none}.char-left{left:-2px;bottom:46px}.char-right{right:-4px;top:114px;animation-delay:.5s}@keyframes floatChar{50%{transform:translateY(-10px) rotate(4deg)}}
     .slide{flex:1;position:relative;z-index:2;border-radius:24px;overflow:hidden;background:radial-gradient(circle at top left,rgba(255,222,89,.75),transparent 45%),radial-gradient(circle at bottom right,rgba(56,182,255,.45),transparent 48%),linear-gradient(145deg,rgba(255,255,255,.86),rgba(255,246,198,.86));border:3px solid #ffbd59;padding:18px 14px 58px;box-shadow:inset 0 0 22px rgba(255,196,0,.45)}.slide.animate{animation:slidePop .55s cubic-bezier(.2,1.4,.4,1)}@keyframes slidePop{0%{opacity:0;transform:scale(.88) rotate(-1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}.slide-kicker{font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:#1f9a4d;font-weight:1000;margin-bottom:8px}.slide-title{font-size:1.36rem;line-height:1.1;color:#e63946;font-weight:1000;text-shadow:1px 2px 0 #ffde59;margin-bottom:10px}.slide-text{font-size:.96rem;line-height:1.48;color:#4b2a12;font-weight:650}.slide-text strong{color:#008037;font-weight:1000}.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.pill{font-size:.73rem;font-weight:900;padding:5px 10px;border-radius:999px;background:#ffde59;color:#70390f;border:2px solid #ff914d;box-shadow:0 4px 0 #d06b28}.footer{position:absolute;left:14px;right:14px;bottom:10px;display:flex;align-items:center;justify-content:space-between;font-size:.78rem;color:#07743b;font-weight:900}.dots{display:flex;gap:4px}.dot{width:8px;height:8px;border-radius:50%;background:#ff914d;opacity:.45}.dot.active{opacity:1;background:#e63946;transform:scale(1.35)}
     .map-button{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:11px 15px;border-radius:999px;background:linear-gradient(90deg,#ff3131,#ff914d,#ffde59);color:white;text-decoration:none;font-weight:1000;border:3px solid white;box-shadow:0 8px 0 #b85220,0 0 18px rgba(255,87,51,.85);position:relative;z-index:30;touch-action:manipulation}.game-wrapper{margin-top:10px;padding:10px;border-radius:20px;background:#dfffd6;border:3px solid #00bf63;box-shadow:0 6px 0 #17833d}.game-top{display:flex;justify-content:space-between;font-size:.82rem;color:#0b7436;font-weight:1000;margin-bottom:8px}.game-area{height:120px;position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(#8edfff,#7ed957);border:2px dashed #ff914d}.egg{position:absolute;width:42px;height:54px;border-radius:50% 50% 45% 45%;background:radial-gradient(circle at 35% 22%,#fff,#ffde59 50%,#ff914d);box-shadow:0 0 20px #ffde59,0 7px 8px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-weight:1000;color:#7a3b00;animation:eggPulse .75s ease-in-out infinite;user-select:none}@keyframes eggPulse{50%{transform:scale(1.12) rotate(6deg)}}
+  
+    /* MODO ÉPICO */
+    .flash-epic{
+      position:fixed;inset:0;z-index:9;pointer-events:none;
+      background:radial-gradient(circle at center,rgba(255,255,255,.95),rgba(255,222,89,.45),transparent 62%);
+      opacity:0;mix-blend-mode:screen;
+    }
+    .flash-epic.active{animation:flashEpic .52s ease-out}
+    @keyframes flashEpic{
+      0%{opacity:0;transform:scale(.75)}
+      18%{opacity:1;transform:scale(1)}
+      100%{opacity:0;transform:scale(1.4)}
+    }
+    .confetti{
+      position:absolute;width:10px;height:16px;border-radius:3px;background:var(--c);
+      box-shadow:0 0 10px var(--c);animation:confettiFall 1.05s ease-out forwards;
+    }
+    @keyframes confettiFall{
+      from{opacity:1;transform:translate(0,0) rotate(0deg) scale(1)}
+      to{opacity:0;transform:translate(var(--x),var(--y)) rotate(540deg) scale(.65)}
+    }
+    .animal-pop{
+      position:fixed;z-index:11;pointer-events:none;font-size:2.4rem;
+      text-shadow:0 4px 0 rgba(0,0,0,.18),0 0 18px #fff;
+      animation:animalPop .9s cubic-bezier(.2,1.5,.4,1) forwards;
+    }
+    @keyframes animalPop{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(-20deg)}
+      30%{opacity:1;transform:translate(-50%,-70%) scale(1.25) rotate(8deg)}
+      100%{opacity:0;transform:translate(-50%,-150%) scale(.9) rotate(18deg)}
+    }
+
   </style>
 </head>
 <body>
   <div class="farm-sky"><div class="sun"></div><div class="cloud c1"></div><div class="cloud c2"></div><div class="hill"></div><div class="hill two"></div></div>
-  <div class="spark-layer" id="spark-layer"></div><div class="burst-layer" id="burst-layer"></div>
+  <div class="spark-layer" id="spark-layer"></div><div class="burst-layer" id="burst-layer"></div><div class="flash-epic" id="flash-epic"></div>
   <button id="sound-toggle" class="off" aria-label="Activar música"><span>🔇</span></button>
-  <audio id="bg-music" loop preload="auto" playsinline><source src="https://jetta.vgmtreasurechest.com/soundtracks/best-of-nintendo-music/chfeelra/11.%20castlevania%20-%20stage%201.mp3" type="audio/mpeg"></audio>
+  <audio id="bg-music" loop preload="auto" playsinline><source src="gallo.mp3" type="audio/mpeg"></audio>
   <div id="app"><main class="card" id="tap-area"><div class="top"><img src="principal.png" class="logo" alt="La Granja de Zenón"><div><div class="label">Invitación interactiva</div><div class="name">Moisés cumple 7</div><div class="sub">¡Una aventura de granja llena de color! 🐮🐥</div></div></div><img id="char-left" class="character char-left" src="1.png" alt=""><img id="char-right" class="character char-right" src="2.png" alt=""><section class="slide" id="slide"><div><div class="slide-kicker" id="kicker"></div><h1 class="slide-title" id="title"></h1><div class="slide-text" id="text"></div><div id="extra"></div><div class="pills" id="pills"></div></div><div class="footer"><span>👆 Toca para avanzar</span><div class="dots" id="dots"></div></div></section></main></div>
 <script>
 const slides=[{kicker:"Pantalla 1 · ¡Bienvenidos!",title:"¡La granja está de fiesta!",text:`Hoy la aventura es para celebrar a <strong>Moisés</strong>, que cumple <strong>7 años</strong>. Prepárate para una fiesta llena de colores, música, juegos, alegría y mucha diversión.`,pills:["Moisés 7 años","Fiesta familiar","Modo granja ON"]},{kicker:"Pantalla 2 · Cumpleañero",title:"Moisés desbloquea el nivel 7",text:`Siete años de risas, travesuras, sueños y momentos felices. Ven a celebrar con él este día tan especial, como una gran aventura de La Granja de Zenón.`,pills:["Nivel 7","Aventura activada","Sonrisas al máximo"]},{kicker:"Pantalla 3 · Fecha",title:"Día de la celebración",text:`La fiesta será el <strong>23 de mayo</strong>. Guarda la fecha, prepara tu mejor sonrisa y ven listo para cantar, jugar y acompañar a Moisés en su gran día.`,pills:["23 de mayo","No faltes","Día especial"]},{kicker:"Pantalla 4 · Hora",title:"Nos vemos a las 2:00 PM",text:`La diversión empieza a las <strong>2 de la tarde</strong>. Llega con tiempo para disfrutar cada momento, cada foto y cada sorpresa preparada para este cumpleaños.`,pills:["2:00 PM","Llegar temprano","Diversión completa"]},{kicker:"Pantalla 5 · Lugar",title:"Quinta El Edén",text:`La celebración será en <strong>Quinta El Edén</strong>, ubicada en <strong>Laguna de Chapayán 619, Fracc. Los Naranjos, Altamira, Tamaulipas</strong>.`,pills:["Quinta El Edén","Altamira","Los Naranjos"],map:true},{kicker:"Pantalla 6 · Invitación",title:"Ven a festejar con Moisés",text:`Queremos que seas parte de este día lleno de magia, juegos, colores y alegría. Tu presencia hará que esta fiesta sea todavía más especial.`,pills:["Te esperamos","Con cariño","Fiesta inolvidable"]},{kicker:"Pantalla 7 · Estilo granjero",title:"Trae toda la actitud",text:`Ponte cómodo, ven con ganas de jugar, bailar y convivir. Aquí todos son parte de la granja más divertida, donde la alegría se comparte en familia.`,pills:["Actitud feliz","Fotos bonitas","Mucho color"]},{kicker:"Pantalla 8 · Mini juego",title:"Reto: junta 7 huevitos",text:`Toca el huevito que aparece en el corral. Si llegas a <strong>7 puntos</strong>, desbloqueas un mensaje especial para Moisés.`,pills:["Reto rápido","Toca el huevo","7 puntos"],game:true},{kicker:"Pantalla 9 · Recordatorio",title:"¡Que no se te pase!",text:`<strong>Moisés cumple 7 años</strong><br>📅 <strong>23 de mayo</strong><br>🕑 <strong>2:00 PM</strong><br>📍 <strong>Quinta El Edén</strong>, Altamira, Tamaulipas.`,pills:["Fecha guardada","Nos vemos ahí","Fiesta feliz"]},{kicker:"Pantalla 10 · Cierre",title:"¡Te esperamos!",text:`La granja ya está lista, la música también, y Moisés espera compartir contigo una tarde llena de alegría. Toca otra vez para volver al inicio.`,pills:["Gracias","Vuelve al inicio","Moisés 7"]}];
-const chars=["1.png","2.png","3.png","4.png","5.png","6.png","7.png"],slide=document.getElementById("slide"),kicker=document.getElementById("kicker"),title=document.getElementById("title"),text=document.getElementById("text"),extra=document.getElementById("extra"),pills=document.getElementById("pills"),dots=document.getElementById("dots"),tapArea=document.getElementById("tap-area"),charLeft=document.getElementById("char-left"),charRight=document.getElementById("char-right"),music=document.getElementById("bg-music"),sound=document.getElementById("sound-toggle"),sparkLayer=document.getElementById("spark-layer"),burstLayer=document.getElementById("burst-layer");
-let idx=0,musicOn=false,musicTried=false,score=0,lastAdvance=0;const colors=["#ff3131","#ff914d","#ffde59","#00bf63","#38b6ff","#cb6ce6","#ffffff"];
+const chars=["1.png","2.png","3.png","4.png","5.png","6.png","7.png"],slide=document.getElementById("slide"),kicker=document.getElementById("kicker"),title=document.getElementById("title"),text=document.getElementById("text"),extra=document.getElementById("extra"),pills=document.getElementById("pills"),dots=document.getElementById("dots"),tapArea=document.getElementById("tap-area"),charLeft=document.getElementById("char-left"),charRight=document.getElementById("char-right"),music=document.getElementById("bg-music"),sound=document.getElementById("sound-toggle"),sparkLayer=document.getElementById("spark-layer"),burstLayer=document.getElementById("burst-layer"),flashEpic=document.getElementById("flash-epic");
+let idx=0,musicOn=false,musicTried=false,score=0,lastAdvance=0,firstTouch=true;const colors=["#ff3131","#ff914d","#ffde59","#00bf63","#38b6ff","#cb6ce6","#ffffff"];
 function makeSparkles(){sparkLayer.innerHTML="";for(let i=0;i<34;i++){const s=document.createElement("div");s.className="spark";s.style.left=Math.random()*100+"vw";s.style.top=Math.random()*100+"vh";s.style.setProperty("--c",colors[Math.floor(Math.random()*colors.length)]);s.style.animationDelay=Math.random()*5+"s";s.style.animationDuration=2+Math.random()*3+"s";sparkLayer.appendChild(s)}}makeSparkles();
 function burst(x,y){for(let i=0;i<32;i++){const b=document.createElement("div");b.className="burst";const a=Math.random()*Math.PI*2,d=55+Math.random()*120;b.style.left=x+"px";b.style.top=y+"px";b.style.setProperty("--x",Math.cos(a)*d+"px");b.style.setProperty("--y",Math.sin(a)*d+"px");b.style.setProperty("--c",colors[Math.floor(Math.random()*colors.length)]);burstLayer.appendChild(b);setTimeout(()=>b.remove(),900)}}
+function epicFX(x,y){
+  if(navigator.vibrate) navigator.vibrate([35,25,35]);
+  if(flashEpic){
+    flashEpic.classList.remove("active");
+    void flashEpic.offsetWidth;
+    flashEpic.classList.add("active");
+  }
+  for(let i=0;i<42;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    const a=Math.random()*Math.PI*2, d=80+Math.random()*180;
+    c.style.left=x+"px"; c.style.top=y+"px";
+    c.style.setProperty("--x",Math.cos(a)*d+"px");
+    c.style.setProperty("--y",Math.sin(a)*d+"px");
+    c.style.setProperty("--c",colors[Math.floor(Math.random()*colors.length)]);
+    burstLayer.appendChild(c);
+    setTimeout(()=>c.remove(),1100);
+  }
+  const animals=["🐓","🐥","🐮","🐷","🐴","🌽","🎈"];
+  const pop=document.createElement("div");
+  pop.className="animal-pop";
+  pop.textContent=animals[Math.floor(Math.random()*animals.length)];
+  pop.style.left=x+"px"; pop.style.top=y+"px";
+  document.body.appendChild(pop);
+  setTimeout(()=>pop.remove(),950);
+}
+
 function renderDots(){dots.innerHTML="";slides.forEach((_,i)=>{const d=document.createElement("div");d.className="dot"+(i===idx?" active":"");dots.appendChild(d)})}
 function render(){const s=slides[idx];kicker.innerHTML=s.kicker;title.innerHTML=s.title;text.innerHTML=s.text;extra.innerHTML="";pills.innerHTML="";score=0;charLeft.src=chars[idx%chars.length];charRight.src=chars[(idx+2)%chars.length];slide.classList.remove("animate");void slide.offsetWidth;slide.classList.add("animate");(s.pills||[]).forEach(p=>{const el=document.createElement("span");el.className="pill";el.textContent=p;pills.appendChild(el)});if(s.map)renderMap();if(s.game)renderGame();renderDots()}
-function renderMap(){const a=document.createElement("a");a.className="map-button";a.href="https://www.google.com/maps/search/Quinta%20El%20Ed%C3%A9n/@22.3867,-97.9477,17z?hl=es";a.target="_blank";a.rel="noopener noreferrer";a.innerHTML="📍 Abrir ubicación en Google Maps";a.addEventListener("click",e=>e.stopPropagation());a.addEventListener("touchstart",e=>e.stopPropagation(),{passive:true});extra.appendChild(a)}
+function renderMap(){const a=document.createElement("a");a.className="map-button";a.href="https://www.google.com/maps/search/Quinta%20El%20Ed%C3%A9n/@22.3867,-97.9477,17z?hl=es";a.target="_blank";a.rel="noopener noreferrer";a.innerHTML="📍 Abrir ubicación en Google Maps";a.addEventListener("click",e=>e.stopPropagation());a.addEventListener("pointerup",e=>e.stopPropagation(),{passive:true});extra.appendChild(a)}
 function renderGame(){const wrap=document.createElement("div");wrap.className="game-wrapper";wrap.innerHTML=`<div class="game-top"><span>Puntos: <strong id="score">0</strong> / 7</span><span>🐥 Mini reto</span></div><div class="game-area" id="game-area"></div><div class="tag-small" id="game-msg">Toca el huevito y alcanza 7 puntos.</div>`;extra.appendChild(wrap);spawnEgg()}
 function spawnEgg(){const area=document.getElementById("game-area");if(!area)return;area.innerHTML="";const egg=document.createElement("div");egg.className="egg";egg.textContent="+1";egg.setAttribute("data-no-next","true");const r=area.getBoundingClientRect();egg.style.left=Math.random()*(r.width-48)+3+"px";egg.style.top=Math.random()*(r.height-58)+3+"px";egg.addEventListener("click",eggTap);egg.addEventListener("touchstart",e=>{e.preventDefault();eggTap(e)},{passive:false});area.appendChild(egg)}
 function eggTap(e){e.stopPropagation();score++;const sc=document.getElementById("score"),msg=document.getElementById("game-msg");if(sc)sc.textContent=score;if(msg){msg.innerHTML=score>=7?"<strong>¡Reto completado! 🎉</strong> Moisés ya tiene su gran celebración desbloqueada.":"¡Muy bien! Sigue tocando, ya llevas <strong>"+score+"</strong>."}burst(e.clientX||innerWidth/2,e.clientY||innerHeight/2);spawnEgg()}
 function next(e){
   const target=e.target;
-  if(!target)return;
   if(target.closest(".map-button")||target.closest("#sound-toggle")||target.getAttribute("data-no-next")==="true")return;
   const now=Date.now();
-  if(now-lastAdvance<550)return;
+  if(now-lastAdvance<520)return;
   lastAdvance=now;
-  if(!musicTried){tryMusic();musicTried=true}
-  burst(e.clientX||innerWidth/2,e.clientY||innerHeight/2);
+
+  const x=e.clientX||innerWidth/2, y=e.clientY||innerHeight/2;
+
+  if(firstTouch){
+    firstTouch=false;
+    musicTried=true;
+    tryMusic();
+  }
+
+  burst(x,y);
+  epicFX(x,y);
   idx=(idx+1)%slides.length;
   render();
 }
-function tryMusic(){if(!musicOn){music.volume=0.75;music.play().then(()=>{musicOn=true;sound.classList.remove("off");sound.innerHTML="<span>🔊</span>"}).catch(()=>{sound.classList.add("off");sound.innerHTML="<span>🔇</span>"})}}
+function tryMusic(){
+  if(!musicOn){
+    music.volume=0.85;
+    music.play().then(()=>{
+      musicOn=true;
+      sound.classList.remove("off");
+      sound.innerHTML="<span>🔊</span>";
+    }).catch(()=>{
+      sound.classList.add("off");
+      sound.innerHTML="<span>🔇</span>";
+    });
+  }
+}
 function toggleSound(e){
   e.stopPropagation();
   if(e.preventDefault)e.preventDefault();
   if(!musicOn){
-    music.play().then(()=>{musicOn=true;sound.classList.remove("off");sound.innerHTML="<span>🔊</span>"}).catch(()=>{});
+    firstTouch=false;
+    music.volume=0.85;
+    music.play().then(()=>{
+      musicOn=true;
+      sound.classList.remove("off");
+      sound.innerHTML="<span>🔊</span>";
+    }).catch(()=>{});
   }else{
-    music.pause();musicOn=false;sound.classList.add("off");sound.innerHTML="<span>🔇</span>";
+    music.pause();
+    musicOn=false;
+    sound.classList.add("off");
+    sound.innerHTML="<span>🔇</span>";
   }
 }
 if(window.PointerEvent){
   sound.addEventListener("pointerup",toggleSound,{passive:false});
-}else{
-  sound.addEventListener("click",toggleSound);
-}
-if(window.PointerEvent){
   tapArea.addEventListener("pointerup",e=>{e.preventDefault();next(e)},{passive:false});
 }else{
+  sound.addEventListener("click",toggleSound);
   tapArea.addEventListener("click",next);
 }
-document.addEventListener("keydown",e=>{if(e.code==="Space"||e.code==="ArrowRight"){idx=(idx+1)%slides.length;render()}});
+document.addEventListener("keydown",e=>{
+  if(e.code==="Space"||e.code==="ArrowRight"){
+    const fake={target:tapArea,clientX:innerWidth/2,clientY:innerHeight/2};
+    next(fake);
+  }
+});
 render();
 </script>
 </body>
